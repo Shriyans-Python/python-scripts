@@ -1,0 +1,3 @@
+centos_node2
+centos_node1
+solaristest
