@@ -79,19 +79,23 @@ for host in hosts:
         	CPU = float(ssh_comm(host,usr,passwd,Solaris_cpu))
         	MEM = float(ssh_comm(host,usr,passwd,Solaris_mem))
     except:
-        continue
-    finally:
-    	worksheet.write(row , column , host,format_hostname)
-        
-    	if CPU >= 90.00 :
-        	worksheet.write(row , column + 1, CPU,format_alert)
-    	else:
-        	worksheet.write(row , column + 1,CPU,format_normal)
-    	if MEM >= 90.00 :
-        	worksheet.write(row , column + 2, MEM,format_alert)
-    	else:
-        	worksheet.write(row , column + 2,MEM,format_normal)
-    	row += 1
+        CPU = "No Output"
+        MEM = "No Output"
+        worksheet.write(row , column , host,format_hostname)
+        worksheet.write(row , column + 1, CPU,format_alert)
+        worksheet.write(row , column + 2, MEM,format_alert)
+        continue 
+#    finally:
+    worksheet.write(row , column , host,format_hostname)
+    if CPU >= 90.00 :
+       	worksheet.write(row , column + 1, CPU,format_alert)
+    else:
+       	worksheet.write(row , column + 1,CPU,format_normal)
+    if MEM >= 90.00 :
+       	worksheet.write(row , column + 2, MEM,format_alert)
+    else:
+       	worksheet.write(row , column + 2,MEM,format_normal)
+    row += 1
 
 workbook.close()
 
