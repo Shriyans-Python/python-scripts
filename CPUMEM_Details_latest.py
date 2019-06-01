@@ -68,25 +68,30 @@ column = 0
 for host in hosts:
     UNAME_OUT =  ssh_comm(host,usr,passwd,uname_cmd)
     UNAME = UNAME_OUT.rstrip('\n')
-    if UNAME == "Linux":
-        CPU = float(ssh_comm(host,usr,passwd,Linux_cpu))
-        MEM = float(ssh_comm(host,usr,passwd,Linux_mem))
-    elif UNAME == "AIX":
-        CPU = float(ssh_comm(host,usr,passwd,AIX_cpu))    
-        MEM = float(ssh_comm(host,usr,passwd,AIX_mem))
-    elif UNAME == "SunOS":
-        CPU = float(ssh_comm(host,usr,passwd,Solaris_cpu))
-        MEM = float(ssh_comm(host,usr,passwd,Solaris_mem))
-    worksheet.write(row , column , host,format_hostname)
-    if CPU >= 90.00 :
-        worksheet.write(row , column + 1, CPU,format_alert)
-    else:
-        worksheet.write(row , column + 1,CPU,format_normal)
-    if MEM >= 90.00 :
-        worksheet.write(row , column + 2, MEM,format_alert)
-    else:
-        worksheet.write(row , column + 2,MEM,format_normal)
-    row += 1
+    try:
+    	if UNAME == "Linux":
+        	CPU = float(ssh_comm(host,usr,passwd,Linux_cpu))
+        	MEM = float(ssh_comm(host,usr,passwd,Linux_mem))
+    	elif UNAME == "AIX":
+        	CPU = float(ssh_comm(host,usr,passwd,AIX_cpu))
+        	MEM = float(ssh_comm(host,usr,passwd,AIX_mem))
+    	elif UNAME == "SunOS":
+        	CPU = float(ssh_comm(host,usr,passwd,Solaris_cpu))
+        	MEM = float(ssh_comm(host,usr,passwd,Solaris_mem))
+    except:
+        continue
+    finally:
+    	worksheet.write(row , column , host,format_hostname)
+        
+    	if CPU >= 90.00 :
+        	worksheet.write(row , column + 1, CPU,format_alert)
+    	else:
+        	worksheet.write(row , column + 1,CPU,format_normal)
+    	if MEM >= 90.00 :
+        	worksheet.write(row , column + 2, MEM,format_alert)
+    	else:
+        	worksheet.write(row , column + 2,MEM,format_normal)
+    	row += 1
 
 workbook.close()
 
