@@ -128,19 +128,14 @@ for host in hosts:
     print (FS_NAME_OUT)
     print (FS_USAGE_OUT)
     
-     
-    for filesystem in FS_NAME_OUT:
-        worksheet_fs.write(row + 1,column ,filesystem ,format_hostname)
-        row += 1
+    DIC = dict(zip(FS_NAME_OUT,FS_USAGE_OUT))
 
-    row = 1
-    colum = 0   
- 
-    for usage in FS_USAGE_OUT:
-        worksheet_fs.write(row , column + 1 , usage ,format_alert)
+    print(DIC) 
+    for KEY,VALUE in DIC.items():
+        worksheet_fs.write(row + 1,column ,KEY ,format_hostname)
+        worksheet_fs.write(row + 1, column + 1 , VALUE ,format_alert)
         row += 1
-     
-    row += 1
+    row += 1 
     print("SECOND")
     
 workbook.close()
